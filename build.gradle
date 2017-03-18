@@ -24,7 +24,10 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.security.oauth:spring-security-oauth2')
 	compile('org.springframework.security:spring-security-jwt')
+	runtime('org.postgresql:postgresql')
+	compile('org.flywaydb:flyway-core')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

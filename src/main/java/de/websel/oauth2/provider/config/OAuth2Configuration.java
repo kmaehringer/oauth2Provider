@@ -1,5 +1,7 @@
 package de.websel.oauth2.provider.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +20,13 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
+
+	@Autowired
+	private DataSource dataSource;
+
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("web_app").scopes("FOO").autoApprove(true).authorities("FOO_READ", "FOO_WRITE")
-				.authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code");
+		clients.jdbc(dataSource);
 	}
 
 	@Override
