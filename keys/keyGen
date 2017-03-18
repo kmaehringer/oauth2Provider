@@ -1,0 +1,8 @@
+#! /bin/bash
+
+SECRET="letMeIn"
+PRIVATE_KEY_FILE=websel.jks
+
+keytool -genkeypair -alias jwt -keyalg RSA -dname "CN=websel, L=Rottach-Egern, S=Bayern, C=DE" -keypass $SECRET -keystore $PRIVATE_KEY_FILE -storepass $SECRET
+
+keytool -list -rfc --keystore $PRIVATE_KEY_FILE | openssl x509 -inform pem -pubkey

@@ -24,5 +24,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.security.oauth:spring-security-oauth2')
+	compile('org.springframework.security:spring-security-jwt')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
