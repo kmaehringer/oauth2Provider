@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import de.websel.oauth2.provider.service.CustomUserDetailsService;
 import de.websel.oauth2.provider.service.UserRepository;
@@ -21,6 +22,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Override
 	@Bean
@@ -38,6 +44,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(new CustomUserDetailsService(userRepository));
+		auth.userDetailsService(new CustomUserDetailsService(userRepository)).passwordEncoder(passwordEncoder());
 	}
 }

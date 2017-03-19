@@ -65,5 +65,5 @@ INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope,
 VALUES
 	('web_app', null, null, 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
 
-INSERT INTO t_user (username, password, roles) VALUES ('reader', 'reader', 'FOO_READ'); 
-INSERT INTO t_user (username, password, roles) VALUES ('writer', 'writer', 'FOO_READ,FOO_WRITE'); 
+INSERT INTO t_user (username, password, roles) VALUES ('reader', '$2a$04$n.slkHZeFhRVIBOZIpOLSu4r0ECDsiIq5YdJvBJJfP9PWBqjjLXtS', 'FOO_READ'); 
+INSERT INTO t_user (username, password, roles) VALUES ('writer', '$2a$04$ak1Kg7olsjJNvsjwalWdmua.rLasR.UOzTFgBxE62kS0Te78RG7Ky', 'FOO_READ,FOO_WRITE'); 
