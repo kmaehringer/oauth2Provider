@@ -50,23 +50,20 @@ create table oauth_approvals (
 	lastModifiedAt TIMESTAMP
 );
 
-
--- customized oauth_client_details table
-create table ClientDetails (
-  appId VARCHAR(256) PRIMARY KEY,
-  resourceIds VARCHAR(256),
-  appSecret VARCHAR(256),
-  scope VARCHAR(256),
-  grantTypes VARCHAR(256),
-  redirectUrl VARCHAR(256),
-  authorities VARCHAR(256),
-  access_token_validity INTEGER,
-  refresh_token_validity INTEGER,
-  additionalInformation VARCHAR(4096),
-  autoApproveScopes VARCHAR(256)
+CREATE TABLE t_user (
+    username character varying(255) PRIMARY KEY,
+    password character varying(255),
+    enabled int NOT NULL DEFAULT '1',
+    email character varying(255),
+    firstname character varying(255),
+    lastname character varying(255),
+    roles character varying(255)
 );
 
 INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types,
 	web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove)
 VALUES
 	('web_app', null, null, 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
+
+INSERT INTO t_user (username, password, roles) VALUES ('reader', 'reader', 'FOO_READ'); 
+INSERT INTO t_user (username, password, roles) VALUES ('writer', 'writer', 'FOO_READ,FOO_WRITE'); 
