@@ -93,7 +93,7 @@ CREATE TABLE t_user_role (
 INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types,
 	web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove)
 VALUES
-	('web_app', null, null, 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
+	('web_app', null, 'web_app_secret', 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
 
 INSERT INTO t_user (username, password) VALUES ('reader', 'reader'); 
 INSERT INTO t_user (username, password) VALUES ('writer', 'writer');
