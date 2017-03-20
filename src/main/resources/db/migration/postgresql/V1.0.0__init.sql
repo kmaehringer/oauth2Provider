@@ -50,14 +50,44 @@ create table oauth_approvals (
 	lastModifiedAt TIMESTAMP
 );
 
+create table ClientDetails (
+  appId VARCHAR(255) PRIMARY KEY,
+  resourceIds VARCHAR(255),
+  appSecret VARCHAR(255),
+  scope VARCHAR(255),
+  grantTypes VARCHAR(255),
+  redirectUrl VARCHAR(255),
+  authorities VARCHAR(255),
+  access_token_validity INTEGER,
+  refresh_token_validity INTEGER,
+  additionalInformation VARCHAR(4096),
+  autoApproveScopes VARCHAR(255)
+);
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE t_user (
     username character varying(255) PRIMARY KEY,
     password character varying(255),
     enabled int NOT NULL DEFAULT '1',
     email character varying(255),
     firstname character varying(255),
-    lastname character varying(255),
-    roles character varying(255)
+    lastname character varying(255)
+);
+
+CREATE TABLE t_role (
+    rolename character varying(255) PRIMARY KEY
+);
+
+CREATE TABLE t_user_role (
+    username character varying(255) REFERENCES t_user,
+    rolename character varying(255) REFERENCES t_role,
+    PRIMARY KEY (username, rolename)
 );
 
 INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types,
@@ -65,5 +95,10 @@ INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope,
 VALUES
 	('web_app', null, null, 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
 
-INSERT INTO t_user (username, password, roles) VALUES ('reader', '$2a$04$n.slkHZeFhRVIBOZIpOLSu4r0ECDsiIq5YdJvBJJfP9PWBqjjLXtS', 'FOO_READ'); 
-INSERT INTO t_user (username, password, roles) VALUES ('writer', '$2a$04$ak1Kg7olsjJNvsjwalWdmua.rLasR.UOzTFgBxE62kS0Te78RG7Ky', 'FOO_READ,FOO_WRITE'); 
+INSERT INTO t_user (username, password) VALUES ('reader', 'reader'); 
+INSERT INTO t_user (username, password) VALUES ('writer', 'writer');
+INSERT INTO t_role (rolename) VALUES ('FOO_READ');
+INSERT INTO t_role (rolename) VALUES ('FOO_WRITE');
+INSERT INTO t_user_role (username, rolename) VALUES ('reader', 'FOO_READ');
+INSERT INTO t_user_role (username, rolename) VALUES ('writer', 'FOO_READ');
+INSERT INTO t_user_role (username, rolename) VALUES ('writer', 'FOO_WRITE');

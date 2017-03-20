@@ -1,8 +1,15 @@
 package de.websel.oauth2.provider.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,8 +27,9 @@ public class User {
 	private String lastname;
 	@Column
 	private String email;
-	@Column
-	private String roles;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "t_user_role", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"), inverseJoinColumns = @JoinColumn(name = "rolename", referencedColumnName = "rolename"))
+	private List<Role> roles;
 
 	public User() {
 	}
@@ -74,11 +82,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(String roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 }
