@@ -93,10 +93,10 @@ CREATE TABLE t_user_role (
 INSERT INTO oauth_client_details (client_id, resource_ids, client_secret, scope, authorized_grant_types,
 	web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove)
 VALUES
-	('web_app', null, 'web_app_secret', 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
+	('web_app', null, '$2a$04$RL2MR1GwRFJITyeTGEm4a.2g9cJ4F3iAcZPEsokimaoa2YlPleXqi', 'FOO', 'implicit,password,authorization_code,refresh_token', null, 'FOO_READ,FOO_WRITE', 36000, 36000, null, true);
 
-INSERT INTO t_user (username, password) VALUES ('reader', 'reader'); 
-INSERT INTO t_user (username, password) VALUES ('writer', 'writer');
+INSERT INTO t_user (username, password) VALUES ('reader', '$2a$04$p9Ct73kzMEX0gJJH8e4K4eBGr2qI8ES33dcV5u7gWPSMjfjFajyli'); 
+INSERT INTO t_user (username, password) VALUES ('writer', '$2a$04$hnSuGj7rMUJPBS9Mmz6sZuxFdTjisKmcpDRjR.m7toRxlIE8s58oy');
 INSERT INTO t_role (rolename) VALUES ('FOO_READ');
 INSERT INTO t_role (rolename) VALUES ('FOO_WRITE');
 INSERT INTO t_user_role (username, rolename) VALUES ('reader', 'FOO_READ');
