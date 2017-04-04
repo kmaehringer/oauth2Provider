@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
 import de.websel.oauth2.provider.service.CustomUserDetailsService;
 
 @Configuration
+@EnableOAuth2Client
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
