@@ -4,9 +4,9 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,11 +17,16 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
+
+	@Value("${config.oauth2.privateKey}")
+	private String privateKey;
+
+	@Value("${config.oauth2.publicKey}")
+	private String publicKey;
 
 	@Autowired
 	private DataSource dataSource;
@@ -45,10 +50,9 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
 	@Bean
 	protected JwtAccessTokenConverter jwtTokenEnhancer() {
-		KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("websel.jks"),
-				"letMeIn".toCharArray());
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+		converter.setSigningKey(privateKey);
+		converter.setVerifierKey(publicKey);
 		return converter;
 	}
 
